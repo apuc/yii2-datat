@@ -2,8 +2,8 @@
 
 namespace frontend\behavior;
 
-use frontend\models\test\Key;
-use frontend\models\test\KeyValue;
+use frontend\models\data\Key;
+use frontend\models\data\KeyValue;
 use frontend\traits\KeyValueBaseTrait;
 use yii\base\Behavior;
 

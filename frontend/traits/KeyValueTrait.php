@@ -4,14 +4,22 @@
 namespace frontend\traits;
 
 
-use frontend\models\test\Key;
-use frontend\models\test\KeyValue;
+use frontend\models\data\Key;
+use frontend\models\data\KeyValue;
 
+/**
+ * Trait KeyValueTrait
+ * @package frontend\traits
+ */
 trait KeyValueTrait
 {
     use KeyValueBaseTrait;
 
-
+    /**
+     * @param string $key
+     * @param string $value
+     * @throws \Exception
+     */
     public function setValue(string $key, string $value): void
     {
         $key_id = Key::getIdBySlug($key);
@@ -20,6 +28,11 @@ trait KeyValueTrait
         }
     }
 
+    /**
+     * @param string $key
+     * @return string
+     * @throws \Exception
+     */
     public function getValue(string $key): string
     {
         $key_id = Key::getIdBySlug($key);

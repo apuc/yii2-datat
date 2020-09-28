@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models\test;
+namespace frontend\models\data;
 
 use Yii;
 use yii\db\Exception;
@@ -16,8 +16,6 @@ use yii\db\Exception;
  */
 class Item extends \yii\db\ActiveRecord
 {
-    const NUM_SYM_SLUG = 20;
-
     /**
      * {@inheritdoc}
      */
@@ -68,6 +66,11 @@ class Item extends \yii\db\ActiveRecord
         return $this->hasMany(KeyValue::className(), ['cur_item_id' => 'id']);
     }
 
+    /**
+     * @param bool $insert
+     * @return bool
+     * @throws Exception
+     */
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -104,6 +107,10 @@ class Item extends \yii\db\ActiveRecord
         return $item;
     }
 
+    /**
+     * @param string $slug
+     * @return Item|null
+     */
     public static function getItemBySlug(string $slug)
     {
         return self::findOne(['slug' => $slug]);

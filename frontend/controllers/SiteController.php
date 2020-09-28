@@ -1,26 +1,22 @@
 <?php
+
 namespace frontend\controllers;
 
-use Exception;
-use frontend\behavior\KeyValueBehavior;
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\test\BehaviorItem;
-use frontend\models\test\Item;
-use frontend\models\test\TraitItem;
-use frontend\models\VerifyEmailForm;
-use frontend\service\ItemFactory;
-use frontend\traits\KeyValueBaseTrait;
-use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
+use Exception;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use frontend\models\VerifyEmailForm;
+use frontend\services\ItemFactory;
+use Yii;
+use yii\base\InvalidArgumentException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
 
 /**
  * Site controller
@@ -77,9 +73,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
-     * @return mixed
+     * Пример использования с тестовымси данными
      */
     public function actionIndex()
     {
@@ -98,12 +92,12 @@ class SiteController extends Controller
             $itemChildren->setKeyValues(['os' => 'linux'], $itemParent->id);
             $transaction->commit();
 
+            return $this->render('index');
         } catch (Exception $ex) {
             $transaction->rollBack();
             echo $ex->getMessage();
             die();
         }
-        return $this->render('index');
     }
 
     /**
@@ -245,8 +239,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {

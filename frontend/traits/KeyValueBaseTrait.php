@@ -4,13 +4,21 @@ namespace frontend\traits;
 
 
 use Exception;
-use frontend\models\test\Item;
-use frontend\models\test\Key;
-use frontend\models\test\KeyValue;
+use frontend\models\data\Key;
+use frontend\models\data\KeyValue;
 use yii\base\Behavior;
 
+/**
+ * Trait KeyValueBaseTrait
+ * @package frontend\traits
+ */
 trait KeyValueBaseTrait
 {
+    /**
+     * @param array $keyValues
+     * @param string|null $children_item_id
+     * @throws Exception
+     */
     public function setKeyValues(array $keyValues, string $children_item_id = null)
     {
         if ($keyValues === null) {
@@ -39,6 +47,10 @@ trait KeyValueBaseTrait
         }
     }
 
+    /**
+     * @param string $keySlug
+     * @throws Exception
+     */
     public function setKey(string $keySlug)
     {
         if (!Key::issetKey($keySlug)) {
@@ -46,15 +58,19 @@ trait KeyValueBaseTrait
         }
     }
 
+    /**
+     * @param string $slug
+     * @return Key|null
+     */
     public function getKey(string $slug)
     {
-        $key = Key::findOne(['slug' => $slug]);
-        if ($key === null) {
-            return null;
-        }
-        return $key;
+        return $key = Key::findOne(['slug' => $slug]);
     }
 
+    /**
+     * @return mixed|null
+     * @throws Exception
+     */
     private function getCurId()
     {
         $id = null;
@@ -66,19 +82,36 @@ trait KeyValueBaseTrait
         if ($id === null) {
             throw new Exception('Object does not has ID');
         }
+
         return $id;
     }
 
+    /**
+     * @param $keyId
+     * @return array|\yii\db\ActiveRecord[]
+     * @throws Exception
+     */
     public function getKeyValue($keyId)
     {
         return KeyValue::find()->where(['cur_item_id' => $this->getCurId(), 'key_id' => $keyId])->all();
     }
 
+    /**
+     * @param $keyId
+     * @param $value
+     * @return array|int
+     * @throws Exception
+     */
     public function setKeyValue($keyId, $value)
     {
         $keyVal = KeyValue::findOne(['cur_item_id' => $this->getCurId(), 'key_id' => $keyId]);
         $keyVal->value = $value;
-        $keyVal->save();
-        return $keyVal->id;
+        if ($keyVal->save()) {
+
+            return $keyVal->id;
+        } else {
+
+            return $keyVal->errors;
+        }
     }
 }

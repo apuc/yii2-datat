@@ -1,13 +1,20 @@
 <?php
 
 
-namespace frontend\models\test;
+namespace frontend\models\data;
 
 
 use frontend\behavior\KeyValueBehavior;
 
+/**
+ * Class BehaviorItem
+ * @package frontend\models\data
+ */
 class BehaviorItem extends Item
 {
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return [

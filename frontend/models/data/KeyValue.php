@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models\test;
+namespace frontend\models\data;
 
 /**
  * This is the model class for table "key_value".

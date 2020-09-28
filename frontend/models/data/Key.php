@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models\test;
+namespace frontend\models\data;
 
 use Yii;
 
@@ -79,14 +79,18 @@ class Key extends \yii\db\ActiveRecord
     {
         $key = new Key();
         $key->slug = $slug;
-        $key->save();
-        if ($key->id === null) {
+        if ($key->save()) {
+
+            return $key;
+        } else {
             throw new \Exception('Key can be saved');
         }
-
-        return $key;
     }
 
+    /**
+     * @param string $slug
+     * @return int
+     */
     public static function getIdBySlug(string $slug): int
     {
         return self::findOne(['slug' => $slug])->id;

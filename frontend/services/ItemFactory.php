@@ -1,20 +1,29 @@
 <?php
 
 
-namespace frontend\service;
+namespace frontend\services;
 
 
 use Exception;
-use frontend\models\test\BehaviorItem;
-use frontend\models\test\Item;
-use frontend\models\test\TraitItem;
+use frontend\models\data\BehaviorItem;
+use frontend\models\data\Item;
+use frontend\models\data\TraitItem;
 
+/**
+ * Class ItemFactory
+ * @package frontend\services
+ */
 class ItemFactory
 {
     const BY_TRAIT = 'trait';
     const BY_BEHAVIOR = 'behavior';
 
 
+    /**
+     * @param $type
+     * @return Item
+     * @throws Exception
+     */
     public static function createItem($type): Item
     {
         switch ($type) {
