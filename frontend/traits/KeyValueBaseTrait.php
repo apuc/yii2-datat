@@ -109,9 +109,8 @@ trait KeyValueBaseTrait
         if ($keyVal->save()) {
 
             return $keyVal->id;
-        } else {
-
-            return $keyVal->errors;
         }
+
+        return $keyVal->errors;
     }
 }
